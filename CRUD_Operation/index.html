@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<link rel="stylesheet" href="index.css">
+
+</head>
+<body>
+
+<section class="box">
+    <div class="design">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="form">
+        <h1>Login Form</h1>
+
+<form action="http://localhost:3001/api/validate" method="get">
+<form>
+<input type="text" id="Username" name="Username" placeholder="Username"class="input-field" required>
+<span id="error1" style="color: red;"></span>
+<br>
+<input type="password" id="Password" name="Password" placeholder="Password" class="input-field"required><br>
+<span id="error2" style="color: red;"></span>
+<button type="button" onclick="validate()" class="btn"> Login</button>
+</form>
+
+    </div>
+
+</section> 
+
+
+<script>
+
+function validate(){
+    const username = document.getElementById("Username").value;
+    const password = document.getElementById("Password").value;
+   
+ if (username.length < 1 ){
+        document.getElementById("error1").innerHTML="Username is required !!! ";
+       if(password.length > 1 ){
+        document.getElementById("error2").innerHTML = "";
+       }
+    } 
+    if ( password.length < 1){
+        document.getElementById("error2").innerHTML="Password is required !!! ";
+        if(username.length > 1){
+            document.getElementById("error1").innerHTML = "";
+        }
+
+    }
+    if(username.length > 1  && password.length > 1){
+
+    
+    
+    
+   
+fetch(`http://localhost:3001/api/login?Username=${username}&Password=${password}`).then(
+    respose => respose.json()
+)
+.then(data => {
+    console.log(data);
+    if(data == true){
+        window.location.href = "details.html";
+    }
+    else{
+        window.location.href = "invalid.html";
+    }
+    
+// Update the HTML content with the API response
+
+})
+.catch(error => {
+console.error('Error:', error);
+});
+}
+}
+</script>
+
+
+</body>
+</html>
